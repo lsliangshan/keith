@@ -65,7 +65,8 @@ const store = new Vuex.Store({
       sendMessage: 'send-message'
     },
     robot: {
-      name: ''
+      name: '',
+      id: ''
     },
     localStorageKeys: {
       userInfo: 'user-info'
@@ -73,7 +74,8 @@ const store = new Vuex.Store({
     requestInfo: {
       baseUrl: 'http://127.0.0.1:3001',
       login: '/Kapi/index/login',
-      listRobots: '/Kapi/robot/list'
+      listRobots: '/Kapi/robot/list',
+      connectRobot: '/Kapi/robot/connect'
     },
     loginInfo: {},
     needlessLogin: ['Login', 'Register', 'Forget', 'ActivityPreview', 'ArticleList', 'ArticleView'] // 不需要登录的页面

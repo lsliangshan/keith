@@ -8,6 +8,7 @@ import store from './store'
 import utils from './utils/index'
 import jwt from 'jsonwebtoken'
 import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 
 sync(store, router)
 
@@ -32,7 +33,8 @@ router.beforeEach((to, from, next) => {
       return err || {}
     })
     if (_status.name === 'TokenExpiredError') {
-      _localUserInfo.token = ''
+      _localUserInfo = {}
+      utils.storage.removeItem(_state.localStorageKeys.userInfo)
       next({
         replace: true,
         name: 'Login'
