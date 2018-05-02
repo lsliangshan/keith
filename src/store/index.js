@@ -46,75 +46,37 @@ const store = new Vuex.Store({
   mutations: mutations.mutations,
   getters: getters.getters,
   state: {
-    username: 'root',
-    password: 'Zhaopin@123',
+    username: 'ls',
     author: '智愚',
-    appName: 'ROADMAP',
+    appName: 'Robot Controller',
+    fullAppName: 'Robot控制台',
     shortAppName: 'R',
-    fullAppName: 'ROADMAP后台管理系统',
-    isFullScreen: false,
-    spanLeft: 4,
-    spanRight: 20,
-    menuFold: false, // 左侧菜单是否折叠
-    menuItems: [],
+    socket: {
+      server: 'https://127.0.0.1',
+      // server: PROTOCOL + '//wss.dei2.com',
+      port: '3011',
+      path: '/cmd',
+      event: 'enkel-message',
+      client: {}
+    },
     socketEvents: {
       changeUserRole: 'change-user-role',
       reviewPlugin: 'review-plugin',
       sendMessage: 'send-message'
     },
+    robot: {
+      name: ''
+    },
     localStorageKeys: {
       userInfo: 'user-info'
     },
-    eventHub: new Vue(),
-    events: {
-      getNewMessage: 'get-new-message', // 获取到新消息
-      updatePluginFileContent: 'update-plugin-file-content', // 更新插件内容
-      updatePluginList: 'update-plugin-list', // 更新我的插件列表
-      updateAvatar: 'update-avatar', // 更新我的头像
-      readMessage: 'read-message' // 消息置为已读
-    },
-    assets: {
-      maleAvatar: '/static/images/avatar_male_1.jpg',
-      femaleAvatar: '/static/images/avatar_female_1.jpg'
-    },
     requestInfo: {
-      token: 'ee2c91d2ed36439ebccb9d8b4a67e282',
-      // baseUrl: 'http://172.30.24.71:8081',
-      baseUrl: 'http://operationconfig.zhaopin.com',
-      // baseUrl: 'http://api.open.zhaopin.com',
-      getAllOperationConfigGroup: '/operationcfg/operationconfig/getAllOperationConfigGroup',
-      getAllOperationConfigUnit: '/operationcfg/operationconfig/getAllOperationConfigUnit'
+      baseUrl: 'http://127.0.0.1:3001',
+      login: '/Kapi/index/login',
+      listRobots: '/Kapi/robot/list'
     },
-    loginInfo: {
-      username: '',
-      loginTime: ''
-    },
-    expiresIn: 24 * 60 * 60 * 1000, // 一天
-    loaders: {}, // 页面中所有loader对象
-    contentRouterViewLoader: 'content-router-view-loader',
-    homeRouterViewLoader: 'home-router-view-loader',
-    previewLoader: 'preview-loader',
-    loadingType: 'ball-triangle-path', // loading样式
-    allPlugins: [],
-    allRoles: [
-      {
-        value: 1,
-        name: '超级管理员'
-      },
-      {
-        value: 2,
-        name: '管理员'
-      },
-      {
-        value: 3,
-        name: '开发者'
-      },
-      {
-        value: 4,
-        name: '普通用户'
-      }
-    ],
-    needlessLogin: ['Login', 'Register', 'Forget'] // 不需要登录的页面
+    loginInfo: {},
+    needlessLogin: ['Login', 'Register', 'Forget', 'ActivityPreview', 'ArticleList', 'ArticleView'] // 不需要登录的页面
   }
 })
 

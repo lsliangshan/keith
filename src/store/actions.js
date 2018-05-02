@@ -38,7 +38,7 @@ import axios from 'axios'
 import utils from '../utils'
 const querystring = require('querystring')
 const instance = axios.create({
-  timeout: 3 * 60 * 1000
+  timeout: 3000
 })
 const noop = function () {}
 export const actions = {
@@ -100,11 +100,18 @@ export const actions = {
       if (params.url === '') {
         reject(new Error('url不能为空'))
       }
+      // 自动添加token,phonenum
+      if (!params.data.token) {
+        params.data.token = state.loginInfo.token
+      }
+      if (!params.data.phonenum) {
+        params.data.phonenum = state.loginInfo.phonenum
+      }
       instance({
         method: params.method || 'post',
         baseURL: params.baseUrl || state.requestInfo.baseUrl,
         url: params.url,
-        data: params.data
+        data: querystring.stringify(params.data)
       }).then((res) => {
         if (res.config) {
           delete res.config
@@ -115,7 +122,32 @@ export const actions = {
           reject(res)
         }
       }).catch(err => {
-        reject(err.message)
+        reject(err)
+      })
+    })
+  },
+  [types.AJAX2] ({commit, state}, data) {
+    return new Promise((resolve, reject) => {
+      let params = JSON.parse(JSON.stringify(data))
+      if (params.url === '') {
+        reject(new Error('url不能为空'))
+      }
+      instance({
+        method: params.method || 'post',
+        baseURL: params.baseUrl || state.requestInfo.baseUrl,
+        url: params.url,
+        data: querystring.stringify(params.data)
+      }).then((res) => {
+        if (res.config) {
+          delete res.config
+        }
+        if (res.status === 200) {
+          resolve(res.data)
+        } else {
+          reject(res)
+        }
+      }).catch(err => {
+        reject(err)
       })
     })
   },

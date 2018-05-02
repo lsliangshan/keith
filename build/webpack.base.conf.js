@@ -1,7 +1,6 @@
 'use strict'
 const path = require('path')
 const utils = require('./utils')
-const webpack = require('webpack')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
@@ -48,15 +47,9 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
-        test: /\.worker\.js/,
-        use: {
-          loader: 'worker-loader'
-        }
-      },
-      {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
