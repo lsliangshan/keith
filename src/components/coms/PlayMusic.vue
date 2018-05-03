@@ -58,16 +58,20 @@ export default {
       columns: [
         {
           type: 'index',
-          width: 20,
-          align: 'center'
+          width: 30,
+          align: 'left'
         },
         {
           title: '音乐标题',
+          width: 150,
           key: 'name'
         },
         {
           title: '歌手',
-          key: 'ar[0].name'
+          key: 'ar',
+          render: (h, params) => {
+            return h('span', params.row.ar[0].name)
+          }
         },
         {
           title: '时长',
