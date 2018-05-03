@@ -191,7 +191,7 @@ export default {
       windowBox: {},
       popup: {
         shown: false,
-        component: null
+        component: ''
       },
       commands: [
         {

@@ -9,12 +9,7 @@
     ["es2015", { "modules": false }],
     "stage-2"
   ],
-  "plugins": ["transform-vue-jsx", "transform-runtime", ["component", [
-    {
-      "libraryName": "mint-ui",
-      "style": true
-    }
-  ]]],
+  "plugins": ["transform-vue-jsx", "transform-runtime"],
   "env": {
     "test": {
       "presets": ["env", "stage-2"],
