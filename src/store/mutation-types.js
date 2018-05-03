@@ -115,6 +115,8 @@ export const UPDATE_ACTIVE_POSITION = 'UPDATE_ACTIVE_POSITION'
 
 export const SET_COMMENTS = 'SET_COMMENTS'
 
+export const CONNECT_ROBOT = 'CONNECT_ROBOT'
+
 // >>>> actions:
 
 // 登录1
@@ -134,9 +136,6 @@ export const GET_USER_INFO = 'GET_USER_INFO'
 
 // 发送消息1
 export const SEND_MESSAGE = 'SEND_MESSAGE'
-
-// 保存消息1
-export const SAVE_MESSAGE = 'SAVE_MESSAGE'
 
 // 更新用户的登录信息
 export const UPDATE_LOGIN_INFO = 'UPDATE_LOGIN_INFO'

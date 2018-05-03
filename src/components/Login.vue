@@ -54,7 +54,6 @@
     -moz-filter: blur(5px);
     -ms-filter: blur(5px);
     filter: blur(5px);
-    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=5, MakeShadow=false);
   }
   .login_form {
     width: 80%;

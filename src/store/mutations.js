@@ -219,5 +219,8 @@ export const mutations = {
   },
   [types.SET_COMMENTS] (state, data) {
     state.article.comments = Object.assign({}, state.article.comments, data)
+  },
+  [types.CONNECT_ROBOT] (state, data) {
+    state.robot = Object.assign({}, data.robot)
   }
 }

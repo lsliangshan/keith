@@ -1,6 +1,7 @@
 <template>
   <div class="home_container">
     <div class="home_header_container">
+      <span v-text="robot.name"></span>
       <div class="avatar_container">
         <img class="avatar_img" :src="loginInfo.headIcon"/>
       </div>
@@ -26,6 +27,9 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .avatar_container {
     position: absolute;

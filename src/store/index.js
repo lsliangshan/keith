@@ -52,7 +52,7 @@ const store = new Vuex.Store({
     fullAppName: 'Robot控制台',
     shortAppName: 'R',
     socket: {
-      server: 'https://127.0.0.1',
+      server: 'http://127.0.0.1',
       // server: PROTOCOL + '//wss.dei2.com',
       port: '3011',
       path: '/cmd',
@@ -72,10 +72,15 @@ const store = new Vuex.Store({
       userInfo: 'user-info'
     },
     requestInfo: {
-      baseUrl: 'http://127.0.0.1:3001',
+      baseUrl: 'http://192.168.189.89:3001',
       login: '/Kapi/index/login',
       listRobots: '/Kapi/robot/list',
-      connectRobot: '/Kapi/robot/connect'
+      connectRobot: '/Kapi/robot/connect',
+      nem: { // 网易云音乐
+        search: '/Kapi/nem/search', // 搜索歌曲列表
+        url: '/Kapi/nem/url', // 通过音乐id获取音频真实地址
+        detail: '/Kapi/nem/detail', // 通过音乐id获取音乐详情
+      }
     },
     loginInfo: {},
     needlessLogin: ['Login', 'Register', 'Forget', 'ActivityPreview', 'ArticleList', 'ArticleView'] // 不需要登录的页面

@@ -35,7 +35,7 @@
  */
 import * as types from './mutation-types'
 import axios from 'axios'
-import utils from '../utils'
+// import utils from '../utils'
 const querystring = require('querystring')
 const instance = axios.create({
   timeout: 3000
@@ -96,7 +96,7 @@ export const actions = {
   },
   [types.AJAX] ({commit, state}, data) {
     return new Promise((resolve, reject) => {
-      let params = JSON.parse(JSON.stringify(data))
+      let params = Object.assign({}, data)
       if (params.url === '') {
         reject(new Error('url不能为空'))
       }
@@ -128,7 +128,7 @@ export const actions = {
   },
   [types.AJAX2] ({commit, state}, data) {
     return new Promise((resolve, reject) => {
-      let params = JSON.parse(JSON.stringify(data))
+      let params = Object.assign({}, data)
       if (params.url === '') {
         reject(new Error('url不能为空'))
       }
@@ -232,56 +232,22 @@ export const actions = {
       error(userData)
     }
   },
-  async [types.SAVE_MESSAGE] ({commit, state}, data) {
-    return new Promise((resolve, reject) => {
-      data.uuid = utils.getUUID()
-      instance({
-        method: 'post',
-        baseURL: state.requestInfo.baseUrl,
-        url: state.requestInfo.saveMessage,
-        data: querystring.stringify(data)
-      }).then(saveData => {
-        if (saveData.config) {
-          delete saveData.config
-        }
-        if (saveData.status === 200) {
-          resolve(saveData.data)
-        } else {
-          reject(saveData)
-        }
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  },
   async [types.SEND_MESSAGE] ({commit, state}, data) {
-    let _data = JSON.parse(JSON.stringify(data))
-    Object.assign(_data.message, {
-      sendTime: (+new Date())
-    })
-    let _formData = JSON.parse(JSON.stringify(_data))
-    _formData.token = state.loginInfo.token
-    _formData.phonenum = state.loginInfo.phonenum
-    if (_formData.from) {
-      _data.from = JSON.parse(JSON.stringify(_formData.from))
-      _formData.from = JSON.stringify(_formData.from)
-    } else {
-      _data.from = {
-        phonenum: state.loginInfo.phonenum,
-        username: state.loginInfo.username,
-        role: state.loginInfo.role
-      }
-      _formData.from = JSON.stringify(_data.from)
+    let _from = {
+      phonenum: state.loginInfo.phonenum,
+      username: state.loginInfo.username,
+      role: state.loginInfo.role
     }
-    if (_formData.to) {
-      _formData.to = JSON.stringify(_formData.to)
+    let _to = {
+      username: state.robot.name,
+      id: state.robot.id
     }
-    if (_formData.message) {
-      _formData.message = JSON.stringify(_formData.message)
-    }
-    let savedMessageData = await this.dispatch(types.SAVE_MESSAGE, _formData)
-    if (savedMessageData.status === 200) {
-      _data.message.uuid = savedMessageData.data.uuid
+    let _message = Object.assign({}, data)
+
+    let _data = {
+      from: _from,
+      to: _to,
+      message: _message
     }
     state.socket.client.emit(state.socket.event, _data)
   }

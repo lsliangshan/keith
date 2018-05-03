@@ -6,6 +6,8 @@ import router from './router'
 import { sync } from 'vuex-router-sync'
 import store from './store'
 import utils from './utils/index'
+import * as filters from './filters'
+import mixins from './mixins'
 import jwt from 'jsonwebtoken'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
@@ -15,6 +17,14 @@ sync(store, router)
 Vue.use(iView)
 
 Vue.config.productionTip = false
+
+// register global utility filters.
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
+// register global mixins.
+Vue.mixin(mixins)
 
 router.beforeEach((to, from, next) => {
   const _state = router.app.$options.store.state
