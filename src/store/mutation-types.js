@@ -117,6 +117,14 @@ export const SET_COMMENTS = 'SET_COMMENTS'
 
 export const CONNECT_ROBOT = 'CONNECT_ROBOT'
 
+export const SET_MUSIC_BOX = 'SET_MUSIC_BOX'
+
+export const RESET_MUSIC_BOX = 'RESET_MUSIC_BOX'
+
+export const PLAY_MUSIC = 'PLAY_MUSIC'
+
+export const PAUSE_MUSIC = 'PAUSE_MUSIC'
+
 // >>>> actions:
 
 // 登录1

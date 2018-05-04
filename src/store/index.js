@@ -52,13 +52,18 @@ const store = new Vuex.Store({
     fullAppName: 'Robot控制台',
     shortAppName: 'R',
     socket: {
-      server: 'https://kapi.dei2.com',
+      server: 'http://192.168.189.89',
+      // server: 'https://kapi.dei2.com',
       // server: 'http://192.168.0.103',
       // server: PROTOCOL + '//wss.dei2.com',
       port: '3011',
       path: '/cmd',
       event: 'enkel-message',
       client: {}
+    },
+    musicBox: {
+      play: false, // 是否播放中
+      audio: {} // 音乐对象
     },
     socketEvents: {
       changeUserRole: 'change-user-role',
@@ -73,7 +78,8 @@ const store = new Vuex.Store({
       userInfo: 'user-info'
     },
     requestInfo: {
-      baseUrl: 'https://kapi.dei2.com',
+      baseUrl: 'http://192.168.189.89:3001',
+      // baseUrl: 'https://kapi.dei2.com',
       // baseUrl: 'http://192.168.0.103:3001',
       login: '/Kapi/index/login',
       listRobots: '/Kapi/robot/list',

@@ -11,7 +11,7 @@
       </div>
       <Table stripe :columns="columns" :data="searchResults" v-if="searchResults.length > 0" @on-row-click="playMusic"></Table>
     </div>
-    <audio class="sample_audio" :src="sampleAudio.url || ''" autoplay :ref="sampleAudio.ref"></audio>
+    <!--<audio class="sample_audio" :src="sampleAudio.url || ''" autoplay :ref="sampleAudio.ref"></audio>-->
   </div>
 </template>
 <style scoped>
@@ -136,16 +136,29 @@ export default {
       // })
       // console.log('.>>>>>>>>>', musicData)
     },
+    getAudioObj (music, url) {
+      return {
+        name: music.name,
+        id: music.id,
+        author: music.ar[0],
+        album: music.al,
+        dt: music.dt,
+        url: url
+      }
+    },
     async playMusic (music) {
-      let audioEle = this.$refs[this.sampleAudio.ref]
-      console.log('...', audioEle)
+//      let audioEle = this.$refs[this.sampleAudio.ref]
+//      console.log('...', audioEle)
       let musicData = await this.getMusicUrl({
         id: music.id,
         br: music.h.br
       })
       if (musicData.status === 200 && musicData.data.data.length > 0 && musicData.data.data[0].url) {
         this.sampleAudio.url = musicData.data.data[0].url
-        audioEle.play()
+        this.$store.commit(types.SET_MUSIC_BOX, {
+          play: true,
+          audio: this.getAudioObj(music, this.sampleAudio.url)
+        })
       } else {
         this.$Message.warning('音乐地址解析失败')
       }

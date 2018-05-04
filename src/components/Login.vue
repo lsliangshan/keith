@@ -206,15 +206,18 @@ export default {
           if (Number(res.status) === 200) {
             // 登录成功
             if (res.data.status === 1) {
-              alert('登录成功')
+              that.$Message.success('登录成功')
               utils.storage.setItem(that.$store.state.localStorageKeys.userInfo, res.data)
               that.$store.commit(types.UPDATE_LOGIN_INFO, res.data)
+              that.$router.replace({
+                name: 'Home'
+              })
             } else {
               utils.storage.removeItem(that.$store.state.localStorageKeys.userInfo)
-              alert('您的账号已经被锁定，请联系管理员')
+              that.$Message.warning('您的账号已经被锁定，请联系管理员')
             }
           } else {
-            alert('登录失败: ' + res.message)
+            that.$Message.warning('登录失败: ' + res.message)
           }
         }
       })

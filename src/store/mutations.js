@@ -222,5 +222,24 @@ export const mutations = {
   },
   [types.CONNECT_ROBOT] (state, data) {
     state.robot = Object.assign({}, data.robot)
+  },
+  [types.SET_MUSIC_BOX] (state, data) {
+    state.musicBox = Object.assign({}, data)
+  },
+  [types.RESET_MUSIC_BOX] (state) {
+    state.musicBox = {
+      play: false,
+      audio: {}
+    }
+  },
+  [types.PLAY_MUSIC] (state) {
+    state.musicBox = Object.assign({}, state.musicBox, {
+      play: true
+    })
+  },
+  [types.PAUSE_MUSIC] (state) {
+    state.musicBox = Object.assign({}, state.musicBox, {
+      play: false
+    })
   }
 }
