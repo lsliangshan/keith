@@ -16,6 +16,7 @@
   "dependencies": {
     "babel-plugin-component": "^1.1.0",
     "babel-preset-es2015": "^6.24.1",
+    "better-scroll": "^1.10.2",
     "iview": "^2.13.1",
     "jsonwebtoken": "^8.2.1",
     "node-sass": "^4.9.0",

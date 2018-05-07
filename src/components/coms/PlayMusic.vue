@@ -1,20 +1,22 @@
 <template>
   <div class="play_music_container">
     <div class="play_music_top_search_container">
-      <Input placeholder="搜索音乐" @on-enter	='searchMusic' v-model="searchKey">
+      <Input size="large" clearable placeholder="搜索音乐" class="search_box" @on-enter='searchMusic' v-model="searchKey">
         <Button slot="append" icon="ios-search" @click="searchMusic"></Button>
       </Input>
     </div>
-    <div class="search_music_list_container">
-      <div class="empty_list" v-if="searchResults.length === 0">
-        <span>暂无搜索数据</span>
+    <zpm-scroll :data="searchResults" :options="scrollOptions" class="search_music_list_container">
+      <!--<div class="empty_list" v-if="searchResults.length === 0">-->
+        <!--<span>暂无搜索数据</span>-->
+      <!--</div>-->
+      <div>
+        <Table :loading="searchLoading" stripe size="large" :columns="columns" :data="searchResults" @on-row-click="playMusic"></Table>
       </div>
-      <Table stripe :columns="columns" :data="searchResults" v-if="searchResults.length > 0" @on-row-click="playMusic"></Table>
-    </div>
+    </zpm-scroll>
     <!--<audio class="sample_audio" :src="sampleAudio.url || ''" autoplay :ref="sampleAudio.ref"></audio>-->
   </div>
 </template>
-<style scoped>
+<style>
   .play_music_container {
     width: 100%;
     height: 100%;
@@ -34,8 +36,12 @@
   }
   .search_music_list_container {
     width: 100%;
-    min-height: 60px;
-    background-color: #f5f5f5;
+    height: calc(100% - 48px);
+    /*background-color: #f5f5f5;*/
+    font-size: 16px;
+  }
+  .search_box i.ivu-input-icon {
+    right: 43px!important;
   }
   .empty_list {
     width: 100%;
@@ -66,6 +72,8 @@ export default {
       requestInfo: this.$store.state.requestInfo,
       searchKey: '',
       searchResults: [],
+      scrollOptions: {},
+      searchLoading: false,
       columns: [
         {
           type: 'index',
@@ -111,6 +119,7 @@ export default {
   },
   methods: {
     async searchMusic () {
+      this.searchLoading = true
       let searchData = await this.$store.dispatch(types.AJAX2, {
         baseUrl: this.requestInfo.baseUrl,
         method: 'get',
@@ -119,6 +128,7 @@ export default {
       if (searchData.status === 200 && searchData.data.result.songs.length > 0) {
         // 成功
         this.searchResults = searchData.data.result.songs
+        this.searchLoading = false
       }
     },
     async getMusicUrl (args) {
@@ -164,6 +174,8 @@ export default {
       }
     }
   },
-  components: {}
+  components: {
+    ZpmScroll: () => import('../plugins/ZpmScroll.vue')
+  }
 }
 </script>

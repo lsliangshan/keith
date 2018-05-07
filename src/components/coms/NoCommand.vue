@@ -30,7 +30,7 @@
     <div class="popup_container" :class="{shown: popup.shown}">
       <div class="popup_header_container">
         <div class="popup_header_back_container" @click="closeCommandDetail">
-          <Icon size="18" type="ios-arrow-left"></Icon>
+          <Icon size="22" type="ios-arrow-left"></Icon>
         </div>
         <span v-text="currentCommand && currentCommand.text"></span>
       </div>
@@ -151,7 +151,7 @@
     position: relative;
     width: 100%;
     height: 48px;
-    font-size: 14px;
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -15,6 +15,7 @@ export default {
     margin: 0;
     padding: 0;
     outline: none;
+    -webkit-appearance: none;
   }
   html, body {
     height: 100%;
