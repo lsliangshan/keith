@@ -4,10 +4,10 @@
   </div>
 </template>
 <script>
-  const COMPONENT_NAME = 'loading'
-  export default {
-    name: COMPONENT_NAME
-  }
+const COMPONENT_NAME = 'loading'
+export default {
+  name: COMPONENT_NAME
+}
 </script>
 <style>
   .mf-loading-container img {

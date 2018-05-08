@@ -114,8 +114,14 @@ export default {
             return h('span', _out)
           }
         }
-      ]
+      ],
+      bodyBox: {}
     }
+  },
+  created () {
+    this.$nextTick(() => {
+      this.bodyBox = document.documentElement.getBoundingClientRect()
+    })
   },
   methods: {
     async searchMusic () {

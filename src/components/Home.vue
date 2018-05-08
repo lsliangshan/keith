@@ -306,7 +306,8 @@ export default {
     return {
       globalAudioRef: 'global-audio-ref',
       currentCommand: 'NoCommand',
-      musicBoxShown: false
+      musicBoxShown: false,
+      requestInfo: this.$store.state.requestInfo
     }
   },
   computed: {
@@ -319,6 +320,44 @@ export default {
     musicBox () {
       return this.$store.state.musicBox
     }
+  },
+  created () {
+    this.$nextTick(() => {
+      this.$store.dispatch(types.AJAX2, {
+        baseUrl: this.requestInfo.baseUrl,
+        url: this.requestInfo.sse,
+        data: {
+          id: 'robot_4173311215',
+          type: 'custom',
+          message: JSON.stringify({
+            name: '张三',
+            age: 30
+          })
+        }
+      })
+    })
+
+    setTimeout(() => {
+      this.$store.dispatch(types.AJAX2, {
+        baseUrl: this.requestInfo.baseUrl,
+        url: this.requestInfo.sse,
+        data: {
+          id: 'robot_4173311215',
+          type: 'custom',
+          message: JSON.stringify({
+            name: '李四',
+            age: 20
+          })
+        }
+      })
+    }, 5000)
+
+//    setInterval(() => {
+//      this.$store.dispatch(types.AJAX2, {
+//        baseUrl: this.requestInfo.baseUrl,
+//        url: this.requestInfo.sse
+//      })
+//    }, 3000)
   },
   methods: {
     showMusicDetailBox () {

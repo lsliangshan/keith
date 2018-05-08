@@ -8,7 +8,7 @@
         </Select>
       </FormItem>
       <FormItem label="密码">
-        <Input placeholder="密码" v-model="robotPassword"/>
+        <Input placeholder="密码" size="large" v-model="robotPassword"/>
       </FormItem>
       <FormItem>
         <Button type="primary" :loading="connecting" @click="connectRobot" v-if="connectRobotId !== '' && robotPassword !== ''">
@@ -18,15 +18,17 @@
         <Button type="primary" disabled v-else>连接</Button>
       </FormItem>
     </Form>
-    <div class="cmd_container">
-      <Row>
-        <Col class="cmd_item_container" :xs="6" :sm="6" v-for="(cmd, index) in commands" :key="cmd.name">
+    <transition name="fade">
+      <div class="cmd_container" v-if="connectStatus">
+        <Row>
+          <Col class="cmd_item_container" :xs="6" :sm="6" v-for="(cmd, index) in commands" :key="cmd.name">
           <div class="cmd_item" :data-name="cmd.name" :data-index="index" @click="showCommandDetail" :style="{width: parseFloat(windowBox.width / 4) + 'px', height: parseFloat(windowBox.width / 4) + 'px', backgroundColor: webColors[index % webColors.length].bg}">
             <span class="cmd_item_text" v-text="cmd.text"></span>
           </div>
-        </Col>
-      </Row>
-    </div>
+          </Col>
+        </Row>
+      </div>
+    </transition>
     <div class="popup_container" :class="{shown: popup.shown}">
       <div class="popup_header_container">
         <div class="popup_header_back_container" @click="closeCommandDetail">
