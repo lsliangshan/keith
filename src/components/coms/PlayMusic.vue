@@ -10,7 +10,7 @@
         <!--<span>暂无搜索数据</span>-->
       <!--</div>-->
       <div>
-        <Table :loading="searchLoading" stripe size="large" :columns="columns" :data="searchResults" @on-row-click="playMusic"></Table>
+        <Table :loading="searchLoading" stripe size="large" :columns="columns" :data="searchResults" @on-row-click="sendMusicToRobot" @on-row-dblclick="sendMusicToRobot"></Table>
       </div>
     </zpm-scroll>
     <!--<audio class="sample_audio" :src="sampleAudio.url || ''" autoplay :ref="sampleAudio.ref"></audio>-->
@@ -146,6 +146,22 @@ export default {
       return musicData
     },
     async sendMusicToRobot (music) {
+      console.log('............', music)
+      let musicData = await this.getMusicUrl({
+        id: music.id,
+        br: music.h.br
+      })
+      if (musicData.status === 200 && musicData.data.data.length > 0 && musicData.data.data[0].url) {
+        this.$store.dispatch(types.SEND_MESSAGE, {
+          url: this.requestInfo.sse,
+          data: {
+            action: 'play-music',
+            audio: this.getAudioObj(music, musicData.data.data[0].url)
+          }
+        })
+      } else {
+        this.$Message.warning('音乐地址解析失败')
+      }
       // let musicData = await this.getMusicUrl({
       //   id: music.id,
       //   br: music.h.br

@@ -232,6 +232,25 @@ export const actions = {
       error(userData)
     }
   },
+  // async [types.SEND_MESSAGE] ({commit, state}, data) {
+  //   let _from = {
+  //     phonenum: state.loginInfo.phonenum,
+  //     username: state.loginInfo.username,
+  //     role: state.loginInfo.role
+  //   }
+  //   let _to = {
+  //     username: state.robot.name,
+  //     id: state.robot.id
+  //   }
+  //   let _message = Object.assign({}, data)
+  //
+  //   let _data = {
+  //     from: _from,
+  //     to: _to,
+  //     message: _message
+  //   }
+  //   state.socket.client.emit(state.socket.event, _data)
+  // },
   async [types.SEND_MESSAGE] ({commit, state}, data) {
     let _from = {
       phonenum: state.loginInfo.phonenum,
@@ -242,13 +261,39 @@ export const actions = {
       username: state.robot.name,
       id: state.robot.id
     }
-    let _message = Object.assign({}, data)
+    let _message = Object.assign({}, data.data)
 
     let _data = {
       from: _from,
       to: _to,
       message: _message
     }
-    state.socket.client.emit(state.socket.event, _data)
+    return new Promise((resolve, reject) => {
+      let params = Object.assign({}, data)
+      if (params.url === '') {
+        reject(new Error('url不能为空'))
+      }
+      instance({
+        method: 'post',
+        baseURL: params.baseUrl || state.requestInfo.baseUrl,
+        url: params.url,
+        data: querystring.stringify({
+          id: state.robot.id,
+          type: 'command',
+          data: JSON.stringify(_data)
+        })
+      }).then((res) => {
+        if (res.config) {
+          delete res.config
+        }
+        if (res.status === 200) {
+          resolve(res.data)
+        } else {
+          reject(res)
+        }
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
 }
