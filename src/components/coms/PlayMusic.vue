@@ -145,18 +145,29 @@ export default {
       })
       return musicData
     },
+    async getMusicLyric (args) {
+      let lyricData = await this.$store.dispatch(types.AJAX2, {
+        baseUrl: this.requestInfo.baseUrl,
+        method: 'get',
+        url: this.requestInfo.nem.lyric + '?id=' + args.id
+      })
+      return lyricData
+    },
     async sendMusicToRobot (music) {
       console.log('............', music)
       let musicData = await this.getMusicUrl({
         id: music.id,
         br: music.h.br
       })
+      let lyricData = await this.getMusicLyric({
+        id: music.id
+      })
       if (musicData.status === 200 && musicData.data.data.length > 0 && musicData.data.data[0].url) {
         this.$store.dispatch(types.SEND_MESSAGE, {
           url: this.requestInfo.sse,
           data: {
             action: 'play-music',
-            audio: this.getAudioObj(music, musicData.data.data[0].url)
+            audio: this.getAudioObj(music, lyricData, musicData.data.data[0].url)
           }
         })
       } else {
@@ -168,14 +179,19 @@ export default {
       // })
       // console.log('.>>>>>>>>>', musicData)
     },
-    getAudioObj (music, url) {
+    getAudioObj (music, lyricData, url) {
+      let _lyric = ''
+      if (lyricData.status === 200 && lyricData.data.lrc && lyricData.data.lrc.lyric) {
+        _lyric = lyricData.data.lrc.lyric
+      }
       return {
         name: music.name,
         id: music.id,
         author: music.ar[0],
         album: music.al,
         dt: music.dt,
-        url: url
+        url: url,
+        lyric: _lyric
       }
     },
     async playMusic (music) {
@@ -185,11 +201,14 @@ export default {
         id: music.id,
         br: music.h.br
       })
+      let lyricData = await this.getMusicLyric({
+        id: music.id
+      })
       if (musicData.status === 200 && musicData.data.data.length > 0 && musicData.data.data[0].url) {
         this.sampleAudio.url = musicData.data.data[0].url
         this.$store.commit(types.SET_MUSIC_BOX, {
           play: true,
-          audio: this.getAudioObj(music, this.sampleAudio.url)
+          audio: this.getAudioObj(music, lyricData, this.sampleAudio.url)
         })
       } else {
         this.$Message.warning('音乐地址解析失败')

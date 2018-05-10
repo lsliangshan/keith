@@ -89,6 +89,7 @@ const store = new Vuex.Store({
         search: '/Kapi/nem/search', // 搜索歌曲列表
         url: '/Kapi/nem/url', // 通过音乐id获取音频真实地址
         detail: '/Kapi/nem/detail', // 通过音乐id获取音乐详情
+        lyric: '/Kapi/nem/lyric', // 通过音乐id获取歌词
       }
     },
     loginInfo: {},
