@@ -154,7 +154,6 @@ export default {
       return lyricData
     },
     async sendMusicToRobot (music) {
-      console.log('............', music)
       let musicData = await this.getMusicUrl({
         id: music.id,
         br: music.h.br
@@ -170,6 +169,7 @@ export default {
             audio: this.getAudioObj(music, lyricData, musicData.data.data[0].url)
           }
         })
+        this.$Message.success('发送成功')
       } else {
         this.$Message.warning('音乐地址解析失败')
       }
@@ -180,10 +180,10 @@ export default {
       // console.log('.>>>>>>>>>', musicData)
     },
     getAudioObj (music, lyricData, url) {
-      let _lyric = ''
-      if (lyricData.status === 200 && lyricData.data.lrc && lyricData.data.lrc.lyric) {
-        _lyric = lyricData.data.lrc.lyric
-      }
+      // let _lyric = ''
+      // if (lyricData.status === 200 && lyricData.data.lrc && lyricData.data.lrc.lyric) {
+      //   _lyric = lyricData.data.lrc.lyric
+      // }
       return {
         name: music.name,
         id: music.id,
@@ -191,7 +191,7 @@ export default {
         album: music.al,
         dt: music.dt,
         url: url,
-        lyric: _lyric
+        lyric: lyricData
       }
     },
     async playMusic (music) {

@@ -1,7 +1,6 @@
 <template>
   <div class="no_command_container">
     <Form :label-width="100" class="robot_select_form" :class="{hidden: connectStatus}" :ref="robotSelectFormRef">
-      <video id="v" ref="videoRef" autoplay style="width: 320px; height: 240px; margin-left: 30px; background-color: lightcyan;"></video>
       <FormItem label="切换Robot" :ref="selectRef">
         <Select v-model="connectRobotId" placeholder="请选择" :label-in-value="true" @on-change="robotChanged">
           <Option value="">请选择</Option>
@@ -279,62 +278,9 @@ export default {
       }
 
       this.windowBox = document.documentElement.getBoundingClientRect()
-      this.initVideo()
     })
   },
   methods: {
-    initVideo () {
-      const that = this
-      var options = true
-      if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
-        try {
-          navigator.mediaDevices.enumerateDevices()
-            .then(function (devices) {
-              devices.forEach(function (device) {
-                if (device.kind === 'videoinput') {
-                  if (device.label.toLowerCase().search('back') > -1) {
-                    options = {'deviceId': {'exact': device.deviceId}, 'facingMode': 'environment'}
-                  }
-                }
-                console.log(device.kind + ': ' + device.label + ' id = ' + device.deviceId)
-              })
-              that.setwebcam2(options)
-            })
-        } catch (e) {
-          console.log(e)
-        }
-      } else {
-        console.log('no navigator.mediaDevices.enumerateDevices')
-        this.setwebcam2(options)
-      }
-    },
-    setwebcam2 (options) {
-      const that = this
-      var n = navigator
-      this.v = this.$refs.videoRef
-
-      if (n.mediaDevices.getUserMedia) {
-        n.mediaDevices.getUserMedia({video: options, audio: false}).then(function (stream) {
-          that.success(stream)
-        }).catch(function (error) {
-          that.error(error)
-        })
-      } else if (n.getUserMedia) {
-        n.getUserMedia({video: options, audio: false}, this.success, this.error)
-      } else if (n.webkitGetUserMedia) {
-        n.webkitGetUserMedia({video: options, audio: false}, this.success, this.error)
-      }
-
-      this.stype = 1
-    },
-    success (stream) {
-      this.v.srcObject = stream
-      this.v.play()
-    },
-    error (error) {
-      console.log(error.message)
-      return
-    },
     async getAllRobots () {
       let listData = await this.$store.dispatch(types.AJAX, {
         baseUrl: this.requestInfo.baseUrl,
