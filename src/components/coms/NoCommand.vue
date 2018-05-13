@@ -199,6 +199,10 @@ export default {
         {
           name: 'play-music',
           text: '播放音乐'
+        },
+        {
+          name: 'play-video',
+          text: '播放视频'
         }
       ],
       currentCommand: {},
@@ -360,7 +364,8 @@ export default {
     }
   },
   components: {
-    PlayMusic: () => import('./PlayMusic.vue')
+    PlayMusic: () => import('./PlayMusic.vue'),
+    PlayVideo: () => import('./PlayVideo.vue')
   }
 }
 </script>
