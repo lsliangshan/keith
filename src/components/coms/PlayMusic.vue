@@ -162,14 +162,18 @@ export default {
         id: music.id
       })
       if (musicData.status === 200 && musicData.data.data.length > 0 && musicData.data.data[0].url) {
-        this.$store.dispatch(types.SEND_MESSAGE, {
+        let sendData = await this.$store.dispatch(types.SEND_MESSAGE, {
           url: this.requestInfo.sse,
           data: {
             action: 'play-music',
             audio: this.getAudioObj(music, lyricData, musicData.data.data[0].url)
           }
         })
-        this.$Message.success('发送成功')
+        if (sendData.status === 200) {
+          this.$Message.success('发送成功')
+        } else {
+          this.$Message.warning('发送失败，请稍后重试')
+        }
       } else {
         this.$Message.warning('音乐地址解析失败')
       }
