@@ -316,7 +316,7 @@ export default {
               name: this.connectRobotName
             }
           })
-          this.connectSocket()
+          // this.connectSocket()
         } else {
           this.$Message.warning('连接失败')
           this.connectStatus = false

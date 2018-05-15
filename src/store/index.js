@@ -54,7 +54,7 @@ const store = new Vuex.Store({
     socket: {
       // server: 'http://192.168.189.89',
       server: 'https://kapi.dei2.com',
-      // server: 'http://192.168.0.103',
+      // server: 'http://10.165.105.142',
       // server: PROTOCOL + '//wss.dei2.com',
       port: '3011',
       path: '/cmd',
@@ -80,7 +80,7 @@ const store = new Vuex.Store({
     requestInfo: {
       // baseUrl: 'http://192.168.189.89:3001',
       baseUrl: 'https://kapi.dei2.com',
-      // baseUrl: 'http://192.168.0.103:3001',
+      // baseUrl: 'http://10.165.105.142:3001',
       login: '/Kapi/index/login',
       listRobots: '/Kapi/robot/list',
       connectRobot: '/Kapi/robot/connect',
